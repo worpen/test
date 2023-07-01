@@ -1,75 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Чтение файла PDF</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        #pdfContainer {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .page-container {
-            border: 1px solid #ccc;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            max-width: 400px;
-        }
-    </style>
-    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+    <title>PDF Viewer</title>
 </head>
 <body>
-    <h1>Чтение файла PDF</h1>
-
-    <div id="pdfContainer"></div>
-
-    <script>
-        // Путь к файлу PDF
-        const pdfUrl = 'https://drive.google.com/file/d/11kwLm9Y13ju99BnjKphbXJmyx1d9AQqh/view?usp=sharing';
-
-        // Контейнер для отображения PDF
-        const container = document.getElementById('pdfContainer');
-
-        // Загрузка и отображение файла PDF
-        function renderPDF() {
-            // Получение объекта PDFDocumentProxy из файла PDF
-            PDFJS.getDocument(pdfUrl).promise.then(function (pdf) {
-                // Цикл для создания элементов страниц PDF
-                for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
-                    // Создание элемента для каждой страницы
-                    const pageContainer = document.createElement('div');
-                    pageContainer.classList.add('page-container');
-                    container.appendChild(pageContainer);
-
-                    // Рендеринг страницы в элементе
-                    pdf.getPage(pageNumber).then(function (page) {
-                        const scale = 1.5;
-                        const viewport = page.getViewport({ scale: scale });
-                        const canvas = document.createElement('canvas');
-                        const context = canvas.getContext('2d');
-                        canvas.height = viewport.height;
-                        canvas.width = viewport.width;
-                        page.render({ canvasContext: context, viewport: viewport });
-                        pageContainer.appendChild(canvas);
-                    });
-                }
-            });
-        }
-
-        // Вызов функции загрузки и отображения PDF
-        renderPDF();
-    </script>
+    <iframe src="https://docs.google.com/viewer?url=https://drive.google.com/file/d/11kwLm9Y13ju99BnjKphbXJmyx1d9AQqh/view?usp=sharing&embedded=true" 
+style="width: 600px; height: 600px;" frameborder="0">Ваш браузер не поддерживает фреймы</iframe>
 </body>
 </html>
