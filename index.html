@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Biletlar</title>
+</head>
+<body>
+    <h1>Biletlar jadvali</h1>
+    <ul id="ticketList">
+    </ul>
+
+    <script>
+        fetch('/tickets') 
+            .then(response => response.json())
+            .then(data => {
+                const ticketList = document.getElementById('ticketList');
+                data.forEach(ticket => {
+                    const li = document.createElement('li');
+                    li.textContent = ticket;
+                    ticketList.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Ошибка:', error));
+    </script>
+</body>
+</html>
