@@ -1,25 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Biletlar</title>
-</head>
-<body>
-    <h1>Biletlar jadvali</h1>
-    <ul id="ticketList">
-    </ul>
 
-    <script>
-        fetch('/tickets') 
-            .then(response => response.json())
-            .then(data => {
-                const ticketList = document.getElementById('ticketList');
-                data.forEach(ticket => {
-                    const li = document.createElement('li');
-                    li.textContent = ticket;
-                    ticketList.appendChild(li);
-                });
-            })
-            .catch(error => console.error('Ошибка:', error));
-    </script>
+<head>
+  <title>File Reader</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+  <h1>File Reader</h1>
+  <form id="fileForm">
+    <label for="folder">Folder:</label>
+    <input type="text" id="folder" name="folder"><br><br>
+    <label for="file">File:</label>
+    <input type="text" id="file" name="file"><br><br>
+    <input type="submit" value="Read File">
+  </form>
+
+  <div id="fileContent"></div>
+
+  <script>
+    $(document).ready(function () {
+      $('#fileForm').submit(function (e) {
+        e.preventDefault();
+
+        const folder = $('#folder').val();
+        const file = $('#file').val();
+        const filePath = `files/${folder}/${file}`;
+
+        $.get(filePath, function (data) {
+          $('#fileContent').text(data);
+        }).fail(function () {
+          $('#fileContent').text('File not found');
+        });
+      });
+    });
+  </script>
 </body>
+
 </html>
